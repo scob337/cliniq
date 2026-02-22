@@ -43,7 +43,7 @@
 
 | Category | Technology |
 | :--- | :--- |
-| **Frontend Framework** | React 18 (Vite) |
+| **Frontend Framework** | next 16 |
 | **Styling** | Tailwind CSS + Shadcn/ui |
 | **Language** | TypeScript (Strict Mode) |
 | **State Management** | Zustand |

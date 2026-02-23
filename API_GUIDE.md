@@ -13,14 +13,37 @@ http://localhost:3000
 
 ### 1️⃣ **التخصصات الطبية**
 
-#### احصل على جميع التخصصات
+#### احصل على جميع التخصصات مع إمكانية الفلترة
 ```
 GET /api/specialties
 ```
 
-**مثال الطلب:**
+**معاملات الفلترة (Query Parameters):**
+| المعامل | النوع | الوصف | مثال |
+|--------|------|-------|------|
+| `province` | string | فلترة حسب المحافظة | `?province=cairo` |
+| `minPrice` | number | الحد الأدنى لسعر الكشف | `?minPrice=200` |
+| `maxPrice` | number | الحد الأقصى لسعر الكشف | `?maxPrice=400` |
+| `search` | string | البحث في اسم التخصص والوصف | `?search=جلد` |
+
+**مثال الطلب - جلب جميع التخصصات:**
 ```bash
-curl http://localhost:3000/api/specialties
+curl "http://localhost:3000/api/specialties"
+```
+
+**مثال الطلب - فلترة حسب المحافظة:**
+```bash
+curl "http://localhost:3000/api/specialties?province=cairo"
+```
+
+**مثال الطلب - فلترة حسب السعر:**
+```bash
+curl "http://localhost:3000/api/specialties?minPrice=250&maxPrice=400"
+```
+
+**مثال الطلب - فلترة متقدمة:**
+```bash
+curl "http://localhost:3000/api/specialties?province=cairo&minPrice=300&maxPrice=450&search=جراحة"
 ```
 
 **مثال الاستجابة:**
@@ -31,13 +54,66 @@ curl http://localhost:3000/api/specialties
     {
       "id": "dermatology",
       "name": "جلدية",
-      "description": "أمراض الجلد والعلاج الجمالي",
-      "image": "https://via.placeholder.com/150?text=جلدية"
+      "description": "أمراض الجلد والعلاج الجمالي والليزر",
+      "image": "https://via.placeholder.com/150?text=جلدية",
+      "consultation_fee": 350,
+      "provinces": ["cairo", "giza", "beheira"],
+      "doctors_count": 8
+    },
+    {
+      "id": "cardiology",
+      "name": "أمراض القلب والأوعية الدموية",
+      "description": "أمراض القلب والضغط والقسطرة القلبية",
+      "image": "https://via.placeholder.com/150?text=قلب",
+      "consultation_fee": 380,
+      "provinces": ["cairo", "giza", "alexandria", "assiut"],
+      "doctors_count": 7
     }
   ],
-  "العدد": 43
+  "العدد": 2,
+  "الإجمالي": 43,
+  "الفلاتر": {
+    "المحافظة": "cairo",
+    "السعر_من": "300",
+    "السعر_الى": "450",
+    "البحث": "bored"
+  }
 }
 ```
+
+**شرح حقول الاستجابة:**
+| الحقل | النوع | الوصف |
+|------|------|-------|
+| `نجح` | boolean | حالة الطلب |
+| `البيانات` | array | قائمة التخصصات |
+| `العدد` | number | عدد النتائج المسترجعة |
+| `الإجمالي` | number | إجمالي عدد التخصصات |
+| `الفلاتر` | object | الفلاتر المستخدمة في الطلب |
+
+**شرح حقول التخصص:**
+| الحقل | النوع | الوصف |
+|------|------|-------|
+| `id` | string | معرف التخصص الفريد |
+| `name` | string | اسم التخصص |
+| `description` | string | وصف تفصيلي للتخصص |
+| `image` | string | صورة التخصص |
+| `consultation_fee` | number | سعر الكشف بالجنيه المصري |
+| `provinces` | array | قائمة معرفات المحافظات المتاحة |
+| `doctors_count` | number | عدد الأطباء في التخصص |
+
+**المحافظات المتاحة:**
+```
+- cairo (القاهرة)
+- giza (الجيزة)
+- alexandria (الإسكندرية)
+- assiut (أسيوط)
+- beheira (البحيرة)
+```
+
+**نطاق أسعار الكشف:**
+- **الأرخص:** 150 جنيه (طبيب عام)
+- **المتوسط:** 300-350 جنيه (معظم التخصصات)
+- **الأغلى:** 500 جنيه (جراحة القلب، الحقن المجهري)
 
 ---
 

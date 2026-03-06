@@ -32,7 +32,7 @@ async function getAllSpecialties() {
 // ============================================
 
 // جلب التخصصات المتاحة في القاهرة
-async function getSpecialtiesByProvince(province) {
+async function getSpecialtiesByProvince(province: string) {
   const response = await fetch(`/api/specialties?province=${province}`);
   const data = await response.json();
   return data.البيانات;
@@ -48,10 +48,10 @@ async function getSpecialtiesByProvince(province) {
 // ============================================
 
 // جلب التخصصات برسوم معينة
-async function getSpecialtiesByPrice(minPrice, maxPrice) {
+async function getSpecialtiesByPrice(minPrice: number, maxPrice: number) {
   const params = new URLSearchParams();
-  params.append('minPrice', minPrice);
-  params.append('maxPrice', maxPrice);
+  params.append('minPrice', String(minPrice));
+  params.append('maxPrice', String(maxPrice));
   
   const response = await fetch(`/api/specialties?${params}`);
   const data = await response.json();
@@ -79,7 +79,7 @@ async function getSpecialtiesByPrice(minPrice, maxPrice) {
 // ============================================
 
 // البحث عن تخصص معين
-async function searchSpecialties(searchTerm) {
+async function searchSpecialties(searchTerm: string) {
   const response = await fetch(`/api/specialties?search=${encodeURIComponent(searchTerm)}`);
   const data = await response.json();
   return data.البيانات;
@@ -99,12 +99,19 @@ async function searchSpecialties(searchTerm) {
 // ============================================
 
 // دالة شاملة للفلترة
-async function searchSpecialtiesAdvanced(filters) {
+type SearchFilters = {
+  province?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  search?: string;
+};
+
+async function searchSpecialtiesAdvanced(filters: SearchFilters) {
   const params = new URLSearchParams();
   
   if (filters.province) params.append('province', filters.province);
-  if (filters.minPrice) params.append('minPrice', filters.minPrice);
-  if (filters.maxPrice) params.append('maxPrice', filters.maxPrice);
+  if (filters.minPrice !== undefined) params.append('minPrice', String(filters.minPrice));
+  if (filters.maxPrice !== undefined) params.append('maxPrice', String(filters.maxPrice));
   if (filters.search) params.append('search', filters.search);
 
   const response = await fetch(`/api/specialties?${params}`);
@@ -135,7 +142,7 @@ async function searchSpecialtiesAdvanced(filters) {
 // 6️⃣ عرض معلومات التخصص بشكل منسق
 // ============================================
 
-function displaySpecialty(specialty) {
+function displaySpecialty(specialty: any) {
   return `
     🏥 ${specialty.name}
     ━━━━━━━━━━━━━━━━━━━━
@@ -274,7 +281,7 @@ const testCases = {
   // اختبار 2: فلترة حسب المحافظة
   test2: async () => {
     const data = await searchSpecialtiesAdvanced({ province: 'cairo' });
-    const allInCairo = data.البيانات.every(s => s.provinces.includes('cairo'));
+    const allInCairo = data.البيانات.every((s: any) => s.provinces.includes('cairo'));
     console.assert(allInCairo, 'جميع النتائج يجب أن تكون متوفرة في القاهرة');
     console.log('✅ اختبار 2 نجح');
   },
@@ -282,7 +289,7 @@ const testCases = {
   // اختبار 3: فلترة حسب السعر
   test3: async () => {
     const data = await searchSpecialtiesAdvanced({ minPrice: 200, maxPrice: 400 });
-    const allInRange = data.البيانات.every(s => s.consultation_fee >= 200 && s.consultation_fee <= 400);
+    const allInRange = data.البيانات.every((s: any) => s.consultation_fee >= 200 && s.consultation_fee <= 400);
     console.assert(allInRange, 'جميع الأسعار يجب أن تكون في النطاق 200-400');
     console.log('✅ اختبار 3 نجح');
   },
@@ -290,7 +297,7 @@ const testCases = {
   // اختبار 4: البحث
   test4: async () => {
     const data = await searchSpecialtiesAdvanced({ search: 'قلب' });
-    const allContainSearch = data.البيانات.every(s => 
+    const allContainSearch = data.البيانات.every((s: any) => 
       s.name.includes('قلب') || s.description.includes('قلب')
     );
     console.assert(allContainSearch, 'جميع النتائج يجب أن تحتوي على كلمة "قلب"');
@@ -326,7 +333,7 @@ async function example2() {
 // المثال الثالث: المستخدم يريد أفضل الخيارات (أكثر عدد أطباء)
 async function example3() {
   const data = await searchSpecialtiesAdvanced({});
-  const sorted = data.البيانات.sort((a, b) => b.doctors_count - a.doctors_count);
+  const sorted = data.البيانات.sort((a: any, b: any) => b.doctors_count - a.doctors_count);
   console.log('التخصصات الأكثر توفراً:', sorted.slice(0, 5));
 }
 

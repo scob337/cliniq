@@ -98,7 +98,7 @@ export function SpecialtiesList() {
 
   return (
     <div className="grid grid-cols-3 gap-4">
-      {data?.البيانات?.map((specialty) => (
+      {data?.البيانات?.map((specialty: any) => (
         <div key={specialty.id} className="card">
           <img src={specialty.image} alt={specialty.name} />
           <h3>{specialty.name}</h3>
@@ -128,7 +128,7 @@ export function DoctorSearch() {
       {isLoading && <div>جاري البحث...</div>}
 
       <div className="results">
-        {data?.البيانات?.map((doctor) => (
+        {data?.البيانات?.map((doctor: any) => (
           <div key={doctor.id} className="doctor-card">
             <img src={doctor.image} alt={doctor.name} />
             <h3>{doctor.name}</h3>
@@ -168,7 +168,7 @@ export function DoctorFilter() {
       </select>
 
       <div>
-        {doctors?.البيانات?.map((doctor) => (
+        {doctors?.البيانات?.map((doctor: any) => (
           <div key={doctor.id} className="doctor-item">
             <h4>{doctor.name}</h4>
             <p>{doctor.phone}</p>
@@ -188,7 +188,7 @@ async function getSpecialtiesVanilla() {
     const { البيانات, العدد } = await response.json();
 
     console.log(`عدد التخصصات: ${العدد}`);
-    البيانات.forEach(specialty => {
+    البيانات.forEach((specialty: any) => {
       console.log(`${specialty.name} - ${specialty.description}`);
     });
   } catch (error) {
@@ -199,13 +199,14 @@ async function getSpecialtiesVanilla() {
 /**
  * مثال 5: استخدام Axios
  */
-import axios from 'axios';
-
 async function searchDoctorsWithAxios(query: string) {
   try {
-    const { data } = await axios.get('/api/doctors', {
-      params: { بحث: query }
-    });
+    const params = new URLSearchParams();
+    params.append('بحث', query);
+
+    const response = await fetch(`/api/doctors?${params}`);
+    if (!response.ok) throw new Error('فشل جلب الأطباء');
+    const data = await response.json();
 
     return data.البيانات;
   } catch (error) {

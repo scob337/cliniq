@@ -1,0 +1,408 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "كلينيق - نظام إدارة العيادات الطبية",
+    "description": "واجهة برمجية شاملة لنظام كلينيق الطبي",
+    "version": "1.0.0",
+    "contact": {
+      "name": "كلينيق"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "خادم التطوير"
+    },
+    {
+      "url": "https://api.cliniq.com",
+      "description": "خادم الإنتاج"
+    }
+  ],
+  "paths": {
+    "/api/specialties": {
+      "get": {
+        "tags": [
+          "التخصصات الطبية"
+        ],
+        "summary": "احصل على جميع التخصصات",
+        "description": "احصل على قائمة كاملة بجميع التخصصات الطبية المتاحة مع الصور والأوصاف",
+        "operationId": "getSpecialties",
+        "responses": {
+          "200": {
+            "description": "نجاح العملية",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "نجح": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "البيانات": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Specialty"
+                      }
+                    },
+                    "العدد": {
+                      "type": "integer",
+                      "example": 43
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "خطأ في السيرفر"
+          }
+        }
+      }
+    },
+    "/api/provinces": {
+      "get": {
+        "tags": [
+          "المحافظات والمناطق"
+        ],
+        "summary": "احصل على المحافظات والمناطق",
+        "description": "احصل على قائمة المحافظات المصرية ومناطقها",
+        "operationId": "getProvinces",
+        "parameters": [
+          {
+            "name": "محافظة",
+            "in": "query",
+            "description": "معرف المحافظة (اختياري)",
+            "schema": {
+              "type": "string",
+              "example": "cairo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "نجاح العملية",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "نجح": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "البيانات": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Province"
+                      }
+                    },
+                    "العدد": {
+                      "type": "integer",
+                      "example": 8
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "المحافظة غير موجودة"
+          },
+          "500": {
+            "description": "خطأ في السيرفر"
+          }
+        }
+      }
+    },
+    "/api/services": {
+      "get": {
+        "tags": [
+          "الخدمات الطبية"
+        ],
+        "summary": "احصل على الخدمات الطبية",
+        "description": "احصل على قائمة الخدمات الطبية المتوفرة",
+        "operationId": "getServices",
+        "responses": {
+          "200": {
+            "description": "نجاح العملية",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "نجح": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "البيانات": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Service"
+                      }
+                    },
+                    "العدد": {
+                      "type": "integer",
+                      "example": 8
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "خطأ في السيرفر"
+          }
+        }
+      }
+    },
+    "/api/doctors": {
+      "get": {
+        "tags": [
+          "الأطباء والعيادات والمستشفيات"
+        ],
+        "summary": "احصل على الأطباء",
+        "description": "احصل على قائمة الأطباء والعيادات والمستشفيات مع إمكانية الفلترة والبحث",
+        "operationId": "getDoctors",
+        "parameters": [
+          {
+            "name": "معرف",
+            "in": "query",
+            "description": "معرف الطبيب (اختياري)",
+            "schema": {
+              "type": "string",
+              "example": "doc_001"
+            }
+          },
+          {
+            "name": "تخصص",
+            "in": "query",
+            "description": "التخصص (اختياري)",
+            "schema": {
+              "type": "string",
+              "example": "dermatology"
+            }
+          },
+          {
+            "name": "محافظة",
+            "in": "query",
+            "description": "محافظة (اختياري)",
+            "schema": {
+              "type": "string",
+              "example": "cairo"
+            }
+          },
+          {
+            "name": "منطقة",
+            "in": "query",
+            "description": "منطقة (اختياري)",
+            "schema": {
+              "type": "string",
+              "example": "cairo_downtown"
+            }
+          },
+          {
+            "name": "بحث",
+            "in": "query",
+            "description": "نص البحث (اختياري)",
+            "schema": {
+              "type": "string",
+              "example": "أحمد"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "نجاح العملية",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "نجح": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "البيانات": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Doctor"
+                      }
+                    },
+                    "العدد": {
+                      "type": "integer",
+                      "example": 12
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "الطبيب غير موجود"
+          },
+          "500": {
+            "description": "خطأ في السيرفر"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Specialty": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "dermatology"
+          },
+          "name": {
+            "type": "string",
+            "example": "جلدية"
+          },
+          "description": {
+            "type": "string",
+            "example": "أمراض الجلد والعلاج الجمالي"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://via.placeholder.com/150?text=جلدية"
+          }
+        }
+      },
+      "Province": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "cairo"
+          },
+          "name": {
+            "type": "string",
+            "example": "القاهرة"
+          },
+          "areas": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "cairo_downtown"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "وسط البلد"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Service": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "consultation"
+          },
+          "name": {
+            "type": "string",
+            "example": "الاستشارات الطبية"
+          },
+          "description": {
+            "type": "string",
+            "example": "استشارات طبية من أطباء متخصصين"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://via.placeholder.com/150?text=استشارات"
+          }
+        }
+      },
+      "Doctor": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "doc_001"
+          },
+          "name": {
+            "type": "string",
+            "example": "د. أحمد محمد علي"
+          },
+          "specialty": {
+            "type": "string",
+            "example": "dermatology"
+          },
+          "experience": {
+            "type": "integer",
+            "example": 15
+          },
+          "rating": {
+            "type": "number",
+            "example": 4.8
+          },
+          "reviews": {
+            "type": "integer",
+            "example": 142
+          },
+          "province": {
+            "type": "string",
+            "example": "cairo"
+          },
+          "area": {
+            "type": "string",
+            "example": "cairo_downtown"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+201001234567"
+          },
+          "email": {
+            "type": "string",
+            "example": "ahmed@clinic.com"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "doctor",
+              "clinic",
+              "hospital"
+            ],
+            "example": "doctor"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://via.placeholder.com/200?text=د.احمد"
+          },
+          "qualifications": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "بكالوريوس الطب",
+              "ماجستير الأمراض الجلدية"
+            ]
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "consultation",
+              "medical_services"
+            ]
+          },
+          "about": {
+            "type": "string",
+            "example": "متخصص في أمراض الجلد والعلاجات التجميلية بخبرة 15 سنة"
+          }
+        }
+      }
+    }
+  }
+}

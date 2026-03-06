@@ -1,0 +1,279 @@
+{
+  "info": {
+    "_postman_id": "cliniq-api-collection",
+    "name": "كلينيق - API Collection",
+    "description": "مجموعة كاملة من API endpoints لنظام كلينيق الطبي",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "التخصصات الطبية",
+      "item": [
+        {
+          "name": "احصل على جميع التخصصات",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/specialties",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "specialties"
+              ]
+            },
+            "description": "احصل على قائمة جميع التخصصات الطبية مع الصور والأوصاف"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "المحافظات والمناطق",
+      "item": [
+        {
+          "name": "احصل على جميع المحافظات",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/provinces",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "provinces"
+              ]
+            },
+            "description": "احصل على قائمة المحافظات المصرية كاملة مع مناطقها"
+          },
+          "response": []
+        },
+        {
+          "name": "احصل على محافظة معينة",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/provinces?محافظة=cairo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "provinces"
+              ],
+              "query": [
+                {
+                  "key": "محافظة",
+                  "value": "cairo",
+                  "description": "معرف المحافظة (cairo, giza, alexandria, إلخ)"
+                }
+              ]
+            },
+            "description": "احصل على مناطق محافظة معينة"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "الخدمات الطبية",
+      "item": [
+        {
+          "name": "احصل على جميع الخدمات",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/services",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "services"
+              ]
+            },
+            "description": "احصل على قائمة الخدمات الطبية المتوفرة"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "الأطباء والعيادات والمستشفيات",
+      "item": [
+        {
+          "name": "احصل على جميع الأطباء",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/doctors",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "doctors"
+              ]
+            },
+            "description": "احصل على قائمة جميع الأطباء والعيادات والمستشفيات"
+          },
+          "response": []
+        },
+        {
+          "name": "احصل على طبيب بمعرف",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/doctors?معرف=doc_001",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "doctors"
+              ],
+              "query": [
+                {
+                  "key": "معرف",
+                  "value": "doc_001",
+                  "description": "معرف الطبيب الفريد"
+                }
+              ]
+            },
+            "description": "احصل على بيانات طبيب معين برقم معرفه"
+          },
+          "response": []
+        },
+        {
+          "name": "احصل على أطباء تخصص",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/doctors?تخصص=dermatology",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "doctors"
+              ],
+              "query": [
+                {
+                  "key": "تخصص",
+                  "value": "dermatology",
+                  "description": "معرف التخصص"
+                }
+              ]
+            },
+            "description": "احصل على جميع أطباء تخصص معين"
+          },
+          "response": []
+        },
+        {
+          "name": "احصل على أطباء محافظة",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/doctors?محافظة=cairo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "doctors"
+              ],
+              "query": [
+                {
+                  "key": "محافظة",
+                  "value": "cairo",
+                  "description": "معرف المحافظة"
+                }
+              ]
+            },
+            "description": "احصل على أطباء محافظة معينة"
+          },
+          "response": []
+        },
+        {
+          "name": "احصل على أطباء منطقة",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/doctors?محافظة=cairo&منطقة=cairo_downtown",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "doctors"
+              ],
+              "query": [
+                {
+                  "key": "محافظة",
+                  "value": "cairo",
+                  "description": "معرف المحافظة"
+                },
+                {
+                  "key": "منطقة",
+                  "value": "cairo_downtown",
+                  "description": "معرف المنطقة"
+                }
+              ]
+            },
+            "description": "احصل على أطباء منطقة محددة"
+          },
+          "response": []
+        },
+        {
+          "name": "ابحث عن أطباء",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/doctors?بحث=أحمد",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "doctors"
+              ],
+              "query": [
+                {
+                  "key": "بحث",
+                  "value": "أحمد",
+                  "description": "نص البحث (اسم أو تخصص)"
+                }
+              ]
+            },
+            "description": "ابحث عن أطباء باسم أو تخصص"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}

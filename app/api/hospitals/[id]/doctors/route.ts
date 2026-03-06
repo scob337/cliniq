@@ -10,10 +10,10 @@ import { NextResponse, NextRequest } from 'next/server';
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: { id: string } | Promise<{ id: string }> },
 ) {
   try {
-    const { id } = params;
+    const { id } = (await params) as { id: string };
 
     // تحقق من وجود المستشفى
     const hospital = getHospitalById(id);

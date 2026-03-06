@@ -1,6 +1,7 @@
-// examples/useSpecialties.ts
+// examples/useSpecialties.tsx
 // Hook مخصص للحصول على التخصصات
 
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 export function useSpecialties() {
@@ -14,10 +15,10 @@ export function useSpecialties() {
   });
 }
 
-// examples/useProvinces.ts
+// examples/useProvinces.tsx
 // Hook مخصص للحصول على المحافظات
 
-import { useQuery } from '@tanstack/react-query';
+// re-use `useQuery` imported above
 
 export function useProvinces(provinceId?: string) {
   const queryString = provinceId ? `?محافظة=${provinceId}` : '';
@@ -32,10 +33,10 @@ export function useProvinces(provinceId?: string) {
   });
 }
 
-// examples/useDoctors.ts
+// examples/useDoctors.tsx
 // Hook مخصص للحصول على الأطباء مع خيارات متعددة
 
-import { useQuery } from '@tanstack/react-query';
+// re-use `useQuery` imported above
 
 export interface DoctorFilters {
   معرف?: string;
@@ -66,10 +67,10 @@ export function useDoctors(filters?: DoctorFilters) {
   });
 }
 
-// examples/useServices.ts
+// examples/useServices.tsx
 // Hook مخصص للحصول على الخدمات
 
-import { useQuery } from '@tanstack/react-query';
+// re-use `useQuery` imported above
 
 export function useServices() {
   return useQuery({
@@ -216,10 +217,9 @@ async function searchDoctorsWithAxios(query: string) {
 /**
  * مثال 6: مرحلة حياة الكومبوننت (useEffect)
  */
-import React, { useEffect, useState } from 'react';
 
 export function DoctorCard({ doctorId }: { doctorId: string }) {
-  const [doctor, setDoctor] = useState(null);
+  const [doctor, setDoctor] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

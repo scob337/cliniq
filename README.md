@@ -4,10 +4,9 @@
   <p><b>The Next-Gen Clinic Management System | نظام إدارة العيادات والمراكز الطبية الذكي</b></p>
 
   <p>
-    <img src="https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+    <img src="https://img.shields.io/badge/Next-20232A?style=for-the-badge&logo=next&logoColor=61DAFB" />
     <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
     <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
-    <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
     <img src="https://img.shields.io/badge/Lucide_Icons-FF69B4?style=for-the-badge&logo=lucide&logoColor=white" />
   </p>
 </div>
@@ -43,7 +42,7 @@
 
 | Category | Technology |
 | :--- | :--- |
-| **Frontend Framework** | React 18 (Vite) |
+| **Frontend Framework** | Nextjs |
 | **Styling** | Tailwind CSS + Shadcn/ui |
 | **Language** | TypeScript (Strict Mode) |
 | **State Management** | Zustand |

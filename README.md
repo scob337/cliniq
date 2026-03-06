@@ -42,7 +42,7 @@
 
 | Category | Technology |
 | :--- | :--- |
-| **Frontend Framework** | Nextjs |
+| **Frontend Framework** | Next.js 16 |
 | **Styling** | Tailwind CSS + Shadcn/ui |
 | **Language** | TypeScript (Strict Mode) |
 | **State Management** | Zustand |
